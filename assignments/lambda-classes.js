@@ -1,5 +1,7 @@
 // CODE here for your Lambda Classes
 
+console.log(`******************************`)
+
 class Person {
     constructor(attr) {
         this.name = attr.name;
@@ -27,6 +29,27 @@ class Instructor extends Person {
     grade(stuObj, subject) {
         console.log(`${stuObj.name} receives a perfect score on ${subject}`)
     }
+
+    editGrade(stuObj) {
+        const num = Math.floor(Math.random() * 11) + 1;
+        const rng = Math.floor(Math.random() * 11) + 1;
+        if(num < 5) {
+            stuObj.grade = stuObj.grade + (rng * 10);
+            if(stuObj.grade > 100){
+                stuObj.grade = 100;
+            }
+            console.log(`${this.name} has raised ${stuObj.name}'a grade`)
+            return stuObj.grade
+        }
+        else {
+            stuObj.grade = stuObj.grade - (rng * 10);
+            if(stuObj.grade < 0){
+                stuObj.grade = 0;
+            }
+            console.log(`${this.name} has lowered ${stuObj.name}'a grade`)
+            return stuObj.grade
+        }
+    }
 }
 
 class Student extends Person {
@@ -35,6 +58,7 @@ class Student extends Person {
         this.previousBackground = stuAttr.previousBackground;
         this.className = stuAttr.className;
         this.favSubjects = stuAttr.favSubjects;
+        this.grade = stuAttr.grade;
     }
 
     listsSubjects() {
@@ -50,6 +74,16 @@ class Student extends Person {
 
     sprintChallenge(subject) {
         console.log(`${this.name} has begun sprint challenge on ${subject}`)
+    }
+
+    graduate() {
+        if(this.grade >= 70) {
+            console.log(`${this.name} can graduate with a grade of ${this.grade}!`)
+        }
+        else { 
+            console.log(`${this.name} can not graduate with a grade of ${this.grade}. Get back to grading!`)
+            dan.editGrade(andrew);
+        }
     }
 }
 
@@ -87,6 +121,7 @@ const andrew = new Student({
     previousBackground: 'High School Comp Sci',
     className: 'Web21',
     favSubjects: ['Angular', 'Javascript', 'CSS'],
+    grade: Math.floor(Math.random() * 101) + 1,
 });
 
 const brandon = new ProjectManager({
@@ -106,6 +141,8 @@ dan.grade(andrew, 'JS');
 andrew.listsSubjects();
 andrew.PRAssignment('JS');
 andrew.sprintChallenge('Javascript');
+andrew.graduate();
+andrew.graduate();
 
 brandon.standUp('web21_brandon')
 brandon.debugsCode(andrew, 'Javascript')
