@@ -104,3 +104,108 @@ console.log(archer.language); // Elvish
 console.log(archer.greet()); // Lilith offers a greeting in Elvish.
 console.log(mage.takeDamage()); // Bruce took damage.
 console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
+
+const rng = function () {
+    const number = Math.floor(Math.random() * 11) + 1;
+    if(number <= 5) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+class Villain extends Humanoid {
+    constructor(villAttr) {
+        super(villAttr)
+    }
+
+    attackVillain(obj) {
+        let healthVillain = obj.healthPoints;
+        if(this.healthPoints <= 0) {
+            return `You can't attack, you have died!`
+        }
+        if(rng() == true) {
+            obj.healthPoints = healthVillain - 2;
+        } 
+        else {
+            obj.healthPoints = healthVillain - 1;
+        }
+
+        if(obj.healthPoints < 0) {
+            return `You have destroyed ${obj.name}.`
+        }
+        else {
+            return `${obj.name} has taken damage from ${this.name}, they now have ${healthVillain} health.`
+        }
+        }
+}
+
+class Hero extends Humanoid {
+    constructor(heroAttr) {
+        super(heroAttr)
+    }
+
+    attackHero(obj) {
+        let healthHero = obj.healthPoints;
+        if(this.healthPoints <= 0) {
+            return `You can't attack, you have died!`
+        }
+        if(rng() == true) {
+            obj.healthPoints = healthHero - 2;
+        } 
+        else {
+            obj.healthPoints = healthHero - 1;
+        }
+
+        if(obj.healthPoints < 0) {
+            return `You have destroyed ${obj.name}.`
+        }
+        else {
+            return `${obj.name} has taken damage from ${this.name}, they now have ${healthHero} health.`
+        }
+    }
+}
+
+const fight = function () {
+    while(archerVillain.healthPoints > 0 && archerHero.healthPoints > 0) {
+        console.log(archerVillain.attackVillain(archerHero))
+        console.log(archerHero.attackHero(archerVillain))
+    }
+}
+
+const archerVillain = new Villain({
+    createdAt: new Date(),
+    dimensions: {
+        length: 1,
+        width: 2,
+        height: 4,
+    },
+    healthPoints: 10,
+    name: 'Villain',
+    team: 'Forest Kingdom',
+    weapons: [
+        'Bow',
+        'Dagger',
+    ],
+    language: 'Elvish',
+});
+
+const archerHero = new Hero({
+    createdAt: new Date(),
+    dimensions: {
+        length: 1,
+        width: 2,
+        height: 4,
+    },
+    healthPoints: 10,
+    name: 'Hero',
+    team: 'Forest Kingdom',
+    weapons: [
+        'Bow',
+        'Dagger',
+    ],
+    language: 'Elvish',
+});
+
+fight();
